@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" href="css/tableau.css">
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/tableau.css">
+    <link rel="stylesheet" href="css/clavier.css">
 </head>
 
 <body>
@@ -19,8 +20,100 @@
   </tr>
   <tr>
     <td>CHOIX + RADIO + SOUMISSION</td>
-    <td>CLAVIER</td>
-    <td>CLAVIER</td>
+    <td>
+        
+        <div class="piano">
+
+    <!-- Touche blanche -->
+    <div class="Touche-blanche" data-note="Do" data-key="a">Do</div>
+    <div class="Touche-blanche" data-note="Ré" data-key="s">Ré</div>
+    <div class="Touche-blanche" data-note="Mi" data-key="d">Mi</div>
+    <div class="Touche-blanche" data-note="Fa" data-key="f">Fa</div>
+    <div class="Touche-blanche" data-note="Sol" data-key="g">Sol</div>
+    <div class="Touche-blanche" data-note="La" data-key="h">La</div>
+    <div class="Touche-blanche" data-note="Si" data-key="j">Si</div>
+    <div class="Touche-blanche" data-note="Do2" data-key="k">Do</div>
+
+    <!-- Touche Noir -->
+    <div class="Touche-noir c-sharp" data-note="Do#" data-key="w">Do#</div>
+    <div class="Touche-noir d-sharp" data-note="Ré#" data-key="e">Ré#</div>
+    <div class="Touche-noir f-sharp" data-note="Fa#" data-key="t">Fa#</div>
+    <div class="Touche-noir g-sharp" data-note="Sol#" data-key="y">Sol#</div>
+    <div class="Touche-noir a-sharp" data-note="La#" data-key="u">La#</div>
+
+  </div>
+<!--Débute la partie Javascript-->
+      <script>
+     //Modèle de compatibilité JavaScript utilisé pour initialiser l'API Web Audio sur différents navigateurs
+    let AudioContext = window.AudioContext || window.webkitAudioContext;
+    //permet de Jouer avec L'API Web Audio
+    let audioCtx = new AudioContext();
+
+//Détermine les fréquence pour produire la bonne note lorsqu'on appuis sur la clé
+  let frequencies = {
+    "Do": 261.63,
+    "Do#": 277.18,
+    "Ré": 293.66,
+    "Ré#": 311.13,
+    "Mi": 329.63,
+    "Fa": 349.23,
+    "Fa#": 369.99,
+    "Sol": 392.00,
+    "Sol#": 415.30,
+    "La": 440.00,
+    "La#": 466.16,
+    "Si": 493.88,
+    "Do2": 523.26,
+  };
+
+// création d'une fonction qui permet a jouer la bonne fréquence pour produire un beau son universelle
+  function JoueNote(note, value){
+      //Détermine la fréquence avec une Oscillateure
+    let frequence = audioCtx.createOscillator();
+    //Trouve la note a jouer
+    let gainNode = audioCtx.createGain();
+//Joue le typue de son parmis les celle offert par Javascript
+    frequence.type = "sine";
+    //Trouve la valeure de la fréquence a jouer
+    frequence.frequency.value = frequencies[note];
+//cherche la note
+    frequence.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+//permet un son plus ron et court
+    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    //Détertmine la longuer de la note jouer
+    gainNode.gain.exponentialRampToValueAtTime(
+      0.001,
+      audioCtx.currentTime + 1
+    );
+
+//Assure que quand nous appuiyon sur la note nous avons une note jouer
+    frequence.start();
+    frequence.stop(audioCtx.currentTime + 1);
+
+//Chereche la valeure de la note appuiyer
+    value.classList.add("active");
+
+//Fait ensorte que la note ne reste pas appuiyer pour toujour et permet a être appuyer
+    setTimeout(() => {
+      value.classList.remove("active");
+    }, 100);
+  }
+
+//Cherche la quelle des touche a été choisit
+  let keys = document.querySelectorAll(".Touche-blanche, .Touche-noir");
+
+//Ajoute un effect click a notre code
+  keys.forEach(key => {
+    key.addEventListener("click", () => {
+      JoueNote(key.dataset.note, key);
+    });
+  });
+</script>
+<!-- Fin du javascript -->
+    
+    </td>
+    
   </tr>
 </table>
     
