@@ -1,0 +1,12 @@
+table {
+    /* vw et vh sont des valeurs relatifs à la page web et non
+    une unité de mesure fixe 
+    Source : https://www.geeksforgeeks.org/css/explain-the-concept-of-the-vh-and-vw-units-in-css/ */
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    /* ceci élimine l'espace entre le tableau et la page web */
+    margin: 0px;
+}
