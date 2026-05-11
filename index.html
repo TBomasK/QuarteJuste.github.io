@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<html>
+    
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/tableau.css">
@@ -21,8 +24,8 @@
   <tr>
     <td>CHOIX + RADIO + SOUMISSION</td>
     <td>
-        
-        <div class="piano">
+
+  <div class="piano">
 
     <!-- Touche blanche -->
     <div class="Touche-blanche" data-note="Do" data-key="a">Do</div>
@@ -42,6 +45,12 @@
     <div class="Touche-noir a-sharp" data-note="La#" data-key="u">La#</div>
 
   </div>
+    <!-- bouton pour soumettre le formulaire -->
+    <input type="button" id="btnSoumet" onclick="confirmeInscription()"  value="Soumettre le formulaire">
+    <!-- Création d'une section pour l'affichage des résultats -->
+    <div id="divAffiche">
+    </div>
+
 <!--Débute la partie Javascript-->
       <script>
      //Modèle de compatibilité JavaScript utilisé pour initialiser l'API Web Audio sur différents navigateurs
@@ -102,13 +111,27 @@
 
 //Cherche la quelle des touche a été choisit
   let keys = document.querySelectorAll(".Touche-blanche, .Touche-noir");
-
-//Ajoute un effect click a notre code
+  
+  let derniereNote = "";
+  //Ajoute un effect click a notre code
   keys.forEach(key => {
-    key.addEventListener("click", () => {
-      JoueNote(key.dataset.note, key);
-    });
+  key.addEventListener("click", () => {
+    JoueNote(key.dataset.note, key);
+
+    // Sauvegarde la dernière note jouée
+    derniereNote = key.dataset.note;
   });
+});
+  
+  function confirmeInscription() {
+                let affiche = document.getElementById("divAffiche");
+                //Chercher les données dans le formulaire
+                let message = derniereNote
+                //Afficher le message sur la page web
+                affiche.innerHTML = message;
+            }
+
+  
 </script>
 <!-- Fin du javascript -->
     
@@ -118,3 +141,5 @@
 </table>
     
 </body>
+
+</html>
