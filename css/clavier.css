@@ -1,3 +1,6 @@
+<!-- Débute CSS-->
+  
+  <style>
   /*Assure que les lettre son centre*/
     *{
       margin:0;
@@ -93,5 +96,5 @@
       .g-sharp{ left:234px; }
       .a-sharp{ left:284px; }
     }
-  
-/* Fin de CSS Inspirer de https://www.youtube.com/watch?v=Mv1ZYpo8q4g et information partiellement modifier de https://www.codingnepalweb.com/playable-piano-html-css-javascript/ */
+  </style>
+    <!-- Fin de CSS Inspirer de https://www.youtube.com/watch?v=Mv1ZYpo8q4g et information partiellement modifier de https://www.codingnepalweb.com/playable-piano-html-css-javascript/ -->
