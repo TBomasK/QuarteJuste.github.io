@@ -6,7 +6,7 @@ table {
 }
 
 h2 {
-    text-align: center;
+  text-align: center;
   font-size: 27px;
 }
 
@@ -17,6 +17,10 @@ img {
 
 body {
     margin: 5px;
+    background-color: black;
+    text-color: white;
+    text-decoration: bold;
+    text-font: helvetica;
 }
 
 .difficulte {
