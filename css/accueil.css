@@ -5,6 +5,10 @@ table {
     width: 100vw;
 }
 
+tr:hover {
+    background-color: coral;
+}
+
 h1 {
   text-align: center;
   font-size: 27px;
