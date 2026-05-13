@@ -18,7 +18,10 @@ img {
 body {
     margin: 5px;
     background-color: black;
-    text-color: white;
+}
+
+p h2 h1 h3 li {
+    color: white;
     text-decoration: bold;
     text-font: helvetica;
 }
