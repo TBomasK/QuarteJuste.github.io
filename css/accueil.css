@@ -13,9 +13,12 @@ h2 {
 img {
   display: block;
   margin: auto;
-  width: 200px;
 }
 
 body {
     margin: 5px;
+}
+
+.difficulte {
+    width: 200px;
 }
