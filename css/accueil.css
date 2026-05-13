@@ -8,6 +8,7 @@ table {
 h2 {
   text-align: center;
   font-size: 27px;
+  color: white;
 }
 
 img {
@@ -20,7 +21,7 @@ body {
     background-color: black;
 }
 
-p h2 h1 h3 li {
+p {
     color: white;
     text-decoration: bold;
     text-font: helvetica;
