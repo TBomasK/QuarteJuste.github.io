@@ -5,7 +5,7 @@ table {
     width: 100vw;
 }
 
-tr:hover {
+td:hover {
     background-color: coral;
 }
 
