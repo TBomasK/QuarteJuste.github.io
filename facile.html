@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/tableau.css">
     <link rel="stylesheet" href="css/clavier.css">
-
+    
     <style>
            *{
       margin:0;
@@ -114,20 +114,22 @@
     <td>INSTRUCTIONS</td>
     <td>
         <div id="divtitre">
-            
         </div>
     </td>
     <td>RÈGLES / ABOUT</td>
   </tr>
   <tr>
     <td>MESSAGE D'ERREUR</td>
-    <td>FLAT</td>
+    <td>
+        <div id="divflat">
+        </div>
+    </td>
     <td>FLAT</td>
   </tr>
   
   <tr>
     <td>CHOIX + RADIO + SOUMISSION</td>
-    <td colspan="2">
+    <td>
 
   <div class="piano">
 
@@ -236,22 +238,32 @@
 let titre = ""
 
 if(choix == 1){
-    titre = "À vous dirais-je maman"
+
+    titre = "À vous dirais-je maman";
+
+    document.getElementById("divflat").innerHTML =
+        "<img src='https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*' width='250'>";
+
 }else{
     if(choix == 2){
-        titre = "Frère Jacques"
-    }
 
-    
+    titre = "Frère Jacques";
+
+    document.getElementById("divflat").innerHTML =
+        "<img src='https://d2zp5xs5cp8zlg.cloudfront.net/image-79322-800.jpg' width='250'>";
 }
+
+}
+document.getElementById("divtitre").innerHTML = titre;
+
+
+
     function confirmeInscription() {
                 let affiche = document.getElementById("divAffiche");
                 //Chercher les données dans le formulaire
-                let affichetitre = document.getElementById("divtitre")
-                let message = derniereNote + choix + titre
+                let message = derniereNote
                 //Afficher le message sur la page web
                 affiche.innerHTML = message;
-                affichetitre.innerHTML = titre;
             }
   
   
