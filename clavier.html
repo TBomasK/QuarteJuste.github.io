@@ -1,12 +1,135 @@
 <!DOCTYPE html>
+
 <html>
+    
 <head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="css/clavier.css">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/tableau.css">
+    <link rel="stylesheet" href="css/clavier.css">
+    
+    <style>
+           *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+    /* Change la couleure de l'arière plan*/
+    body{
+      background:#111;
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      overflow:hidden;
+
+/*Change Le positionement du piano pour permettre un piano plus courant(clé blanc)*/
+    .piano{
+      position:relative;
+      display:flex;
+    }
+/*Change la couleure des clé*/
+    .Touche-blanche{
+      width:80px;
+      height:320px;
+      background:white;
+      border:2px solid #000;
+      border-radius:0 0 10px 10px;
+      cursor:pointer;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding-bottom:15px;
+      color:black;
+      font-weight:bold;
+      transition:0.1s;
+      user-select:none;
+    }
+/*Change la couleur quand elle est appuiyer par la souris*/
+    .Touche-blanche.active{
+      background:#ddd;
+      transform:translateY(4px);
+    }
+/*Change la couleure des clé*/
+    .Touche-noir{
+      position:absolute;
+      width:50px;
+      height:200px;
+      background:black;
+      border-radius:0 0 8px 8px;
+      z-index:2;
+      cursor:pointer;
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+      padding-bottom:10px;
+      font-size:12px;
+      user-select:none;
+      transition:0.1s;
+    }
+/*Change la couleur quand elle est appuiyer par la souris*/
+    .Touche-noir.active{
+      background:#444;
+      transform:translateY(4px);
+    }
+
+    /*Change Le positionement du piano pour permettre un piano plus courant (clé noir)*/
+    .c-sharp{ left:55px; }
+    .d-sharp{ left:135px; }
+    .f-sharp{ left:295px; }
+    .g-sharp{ left:375px; }
+    .a-sharp{ left:455px; }
+/*Tout ce qui se trouve à l'intérieur des accolades { ... } devient prioritaire uniquement si l'écran est petit.*/
+    @media(max-width:800px){
+      .Touche-blanche{
+        width:50px;
+        height:220px;
+        font-size:12px;
+      }
+
+      .Touche-noir{
+        width:32px;
+        height:130px;
+        font-size:10px;
+      }
+
+      .c-sharp{ left:34px; }
+      .d-sharp{ left:84px; }
+      .f-sharp{ left:184px; }
+      .g-sharp{ left:234px; }
+      .a-sharp{ left:284px; }
+    }
   
+    /* Fin de CSS Inspirer de https://www.youtube.com/watch?v=Mv1ZYpo8q4g et information partiellement modifier de https://www.codingnepalweb.com/playable-piano-html-css-javascript/ */
+    </style>
 </head>
-<!-- fin de head-->
+
 <body>
+    
+    <table border="1">
+  <tr>
+    <td>INSTRUCTIONS</td>
+    <td>
+        <div id="divtitre">
+        </div>
+    </td>
+    <td>RÈGLES / ABOUT</td>
+  </tr>
+  <tr>
+    <td>MESSAGE D'ERREUR</td>
+    <td>
+        <div id="divflat">
+        </div>
+    </td>
+    <td>FLAT</td>
+  </tr>
+  
+  <tr>
+    <td>CHOIX + RADIO + SOUMISSION</td>
+    <td>
 
   <div class="piano">
 
@@ -105,20 +228,53 @@
     derniereNote = key.dataset.note;
   });
 });
+
+  // Code pour Le randomizer pour le titre et le reste
+  let choix = 0
   
-  function confirmeInscription() {
+  while((choix < 1)||(choix > 2)){
+        choix = (Math.random()*10).toFixed()
+  }
+let titre = ""
+
+if(choix == 1){
+
+    titre = "À vous dirais-je maman";
+
+    document.getElementById("divflat").innerHTML =
+        "<img src='https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*' width='250'>";
+
+}else{
+    if(choix == 2){
+
+    titre = "Frère Jacques";
+
+    document.getElementById("divflat").innerHTML =
+        "<img src='https://d2zp5xs5cp8zlg.cloudfront.net/image-79322-800.jpg' width='250'>";
+}
+
+}
+document.getElementById("divtitre").innerHTML = titre;
+
+
+
+    function confirmeInscription() {
                 let affiche = document.getElementById("divAffiche");
                 //Chercher les données dans le formulaire
                 let message = derniereNote
                 //Afficher le message sur la page web
                 affiche.innerHTML = message;
             }
-
+  
   
 </script>
 <!-- Fin du javascript -->
-
+    
+    </td>
+    
+  </tr>
+</table>
+    
 </body>
-<!-- Fin du body -->
+
 </html>
-<!-- Fin du html -->
