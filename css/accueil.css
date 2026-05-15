@@ -35,17 +35,25 @@ p {
     width: 100px;
 }
 
-.modefacile, .modemoyen, .modedifficile {
+.modefacile, .modemoyen1, .modemoyen2, .modedifficile, .nous {
     border-radius: 15px;
     padding: 15px;
     background: coral;
+}
+
+.nous:hover {
+    background: black;
 }
 
 .modefacile:hover {
     background: black;
 }
 
-.modemoyen:hover {
+.modemoyen1:hover {
+    background: black;
+}
+
+.modemoyen2:hover {
     background: black;
 }
 
