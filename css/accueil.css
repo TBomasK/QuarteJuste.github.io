@@ -34,7 +34,7 @@ p {
 .logo {
     width: 200px;
     height: 200px;
-    border-radius: 200px;
+    border-radius: 20%;
     padding: 15px;
     float: right;
 }
