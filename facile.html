@@ -111,7 +111,10 @@
     
     <table border="1">
   <tr>
-    <td>INSTRUCTIONS</td>
+    <td>
+    <div id="divInstruction">
+        </div>
+        </td>
     <td>
         <div id="divtitre">
         </div>
@@ -119,7 +122,10 @@
     <td>RÈGLES / ABOUT</td>
   </tr>
   <tr>
-    <td>MESSAGE D'ERREUR</td>
+    <td>
+        <div id="messageErreur">
+        </div>
+    </td>
     <td>
         <div id="divflat">
         </div>
@@ -216,55 +222,175 @@
   }
 
 //Cherche la quelle des touche a été choisit
-  let keys = document.querySelectorAll(".Touche-blanche, .Touche-noir");
-  
-  let derniereNote = "";
-  //Ajoute un effect click a notre code
-  keys.forEach(key => {
+let keys = document.querySelectorAll(".Touche-blanche, .Touche-noir");
+
+let derniereNote = "";
+let counter = 0;
+let tblNotes = [];
+let erreur = 0;
+
+// CLICK SYSTEM
+keys.forEach(key => {
   key.addEventListener("click", () => {
+
     JoueNote(key.dataset.note, key);
 
-    // Sauvegarde la dernière note jouée
     derniereNote = key.dataset.note;
+
   });
 });
-
   // Code pour Le randomizer pour le titre et le reste
   let choix = 0
   
   while((choix < 1)||(choix > 2)){
-        choix = (Math.random()*10).toFixed()
+        choix = (Math.random()*10).toFixed(0)
   }
 let titre = ""
+let séquence = 0
 
 if(choix == 1){
 
     titre = "À vous dirais-je maman";
-
+    
+    tblNotes = ["Do","Sol","Sol","La","La","Sol"];
+    
+    séquence = 1
+    
     document.getElementById("divflat").innerHTML =
-        "<img src='https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*' width='250'>";
-
+                            "<img src='images/avdm/avdm_1.png' width='250'>";
+    
+    document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[0]
+    
 }else{
+    
     if(choix == 2){
 
     titre = "Frère Jacques";
+    
+    tblNotes = ["Ré","Mi","Do","Mi","Fa","Sol"];
+    
+    séquence = 2
 
     document.getElementById("divflat").innerHTML =
-        "<img src='https://d2zp5xs5cp8zlg.cloudfront.net/image-79322-800.jpg' width='250'>";
+                            "<img src='images/avdm/fj_1.png' width='250'>";
+                            
+    document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[0]
 }
 
 }
 document.getElementById("divtitre").innerHTML = titre;
-
+document.getElementById("messageErreur").innerHTML =
+            "Nombre d'erreurs : " + 0;
 
 
     function confirmeInscription() {
-                let affiche = document.getElementById("divAffiche");
-                //Chercher les données dans le formulaire
-                let message = derniereNote
-                //Afficher le message sur la page web
-                affiche.innerHTML = message;
+            
+            if(séquence == 1){
+                switch (counter + 1){
+                    case 1 :
+                         document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/avdm_2.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]
+                        break;
+                    case 2 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/avdm_3.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]                            
+                            break;
+                    case 3 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/avdm_4.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]                            
+                            break;
+                    case 4 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/avdm_5.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]                            
+                            break;
+                    case 5 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/avdm_6.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]                            
+                            break;
+                    case 6 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/avdm_complet.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Fini"                          
+                            break;
+                        
+                }
+            }else{
+                          if(séquence == 2){
+                switch (counter + 1){
+                    case 1 :
+                         document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/fj_2.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]
+                        break;
+                    case 2 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/fj_3.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]                            
+                            break;
+                    case 3 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/fj_4.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]                            
+                            break;
+                    case 4 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/fj_5.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]                            
+                            break;
+                    case 5 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/fj_6.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[counter + 1]                            
+                            break;
+                    case 6 :
+                        document.getElementById("divflat").innerHTML =
+                            "<img src='images/avdm/fj_complet.png' width='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML =
+                            "Fini"                          
+                            break;
+                        
+                }
             }
+            }
+        
+            if(tblNotes[counter] != derniereNote){
+              erreur++;
+            }
+        
+          counter++
+          document.getElementById("messageErreur").innerHTML =
+            "Nombre d'erreurs : " + erreur;
+}
   
   
 </script>
