@@ -34,3 +34,21 @@ p {
 .difficulte {
     width: 100px;
 }
+
+.modefacile, .modemoyen, .modedifficile {
+    border-radius: 15px;
+    padding: 15px;
+    background: coral;
+}
+
+.modefacile:hover {
+    background: black;
+}
+
+.modemoyen:hover {
+    background: black;
+}
+
+.modedifficile:hover {
+    background: black;
+}
