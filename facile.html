@@ -296,7 +296,10 @@ document.getElementById("messageErreur").innerHTML =
             if(séquence == 1){
                 //Assure quelle recomense après 8 essey
                 if(counter == 8){
-                    counter = 0
+                        //Ajoute un instruction de base                        
+    document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[0]
+                    counter = -1
                     erreur = 0
                 }
                 //Assure que nous avons la bonne séquence d'image et d'instruction
@@ -350,7 +353,10 @@ document.getElementById("messageErreur").innerHTML =
                 //Assure quelle recomense après 8 essey
                     if(séquence == 2){
                         if(counter == 8){
-                        counter = 0
+                                //Ajoute un instruction de base                        
+    document.getElementById("divInstruction").innerHTML =
+                            "Instruction : " + tblNotes[0]
+                        counter = -1
                         erreur = 0
                     }
                      //assure que nous avons la bonne séquence d'image et d'instruction
