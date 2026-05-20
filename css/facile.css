@@ -8,7 +8,7 @@
     display: none;
 }
 
-#boutonsoumettre {
+.boutonsoumettre {
   color: white;
   padding: 15px;
   cursor: pointer;
