@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html>
+    
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/tableau.css">
+    <link rel="stylesheet" href="css/clavier.css">
+    <link rel="stylesheet" href="css/facile.css">
+    <script src="js/facile.js"></script>
+    
+    <style>
+           *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+    /* Change la couleure de l'arière plan*/
+    body{
+      background:#111;
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      overflow:hidden;
+
+/*Change Le positionement du piano pour permettre un piano plus courant(clé blanc)*/
+    .piano{
+      position:relative;
+      display:flex;
+    }
+/*Change la couleure des clé*/
+    .Touche-blanche{
+      width:80px;
+      height:320px;
+      background:white;
+      border:2px solid #000;
+      border-radius:0 0 10px 10px;
+      cursor:pointer;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding-bottom:15px;
+      color:black;
+      font-weight:bold;
+      transition:0.1s;
+      user-select:none;
+    }
+/*Change la couleur quand elle est appuiyer par la souris*/
+    .Touche-blanche.active{
+      background:#ddd;
+      transform:translateY(4px);
+    }
+/*Change la couleure des clé*/
+    .Touche-noir{
+      position:absolute;
+      width:50px;
+      height:200px;
+      background:black;
+      border-radius:0 0 8px 8px;
+      z-index:2;
+      cursor:pointer;
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+      padding-bottom:10px;
+      font-size:12px;
+      user-select:none;
+      transition:0.1s;
+    }
+/*Change la couleur quand elle est appuiyer par la souris*/
+    .Touche-noir.active{
+      background:#444;
+      transform:translateY(4px);
+    }
+
+    /*Change Le positionement du piano pour permettre un piano plus courant (clé noir)*/
+    .C-sharp{ left:34px; }
+    .c-sharp{ left:55px; }
+    .d-sharp{ left:135px; }
+    .f-sharp{ left:295px; }
+    .g-sharp{ left:375px; }
+    .a-sharp{ left:455px; }
+/*Tout ce qui se trouve à l'intérieur des accolades { ... } devient prioritaire uniquement si l'écran est petit.*/
+    @media screen and (max-width:1000000000000px){
+      .Touche-blanche{
+        width:50px;
+        height:220px;
+        font-size:12px;
+      }
+
+      .Touche-noir{
+        width:32px;
+        height:130px;
+        font-size:10px;
+      }
+      .c-sharp{ left:34px; }
+      .d-sharp{ left:84px; }
+      .f-sharp{ left:184px; }
+      .g-sharp{ left:234px; }
+      .a-sharp{ left:284px; }
+      .C-sharp{ left:384px; }
+
+    }
+  
+    /* Fin de CSS Inspirer de https://www.youtube.com/watch?v=Mv1ZYpo8q4g et information partiellement modifier de https://www.codingnepalweb.com/playable-piano-html-css-javascript/ */
+    </style>
+</head>
+
+<body>
+    
+    <table border="1">
+  <tr>
+    <td>
+    <div id="divInstruction">
+        </div>
+        </td>
+    <td>
+        <div id="divtitre">
+        </div>
+    </td>
+    <td>RÈGLES / ABOUT</td>
+  </tr>
+  <tr>
+    <td>
+        <div id="messageErreur">
+        </div>
+    </td>
+    <td colspan="2">
+        <div id="divflat">
+        </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="2"><!-- divAfficheNombreErreurs est où on affiche le nombre d'erreurs -->
+        <div id="divAfficheNombreErreurs"></div>
+        
+        <!-- divTropErreurs est où on affiche le message qui apparaît si trop d'erreurs sont commis.-->
+        <div id="divTropErreurs"></div>
+        
+        <!-- Ce bouton fait afficher la question. Le id est appelé dans le css pour faire cacher le bouton
+        Lorsque le bouton est appuyé, on fait la fonction "afficheQuestion()" -->
+        <input type="button" id="cacheBouton" onclick="afficheQuestion()" value="Affichez la question">
+        
+        <!-- Dans ce div, on fait afficher 
+            1) la question à répondre
+            2) la boîte de text pour insérer la réponse
+            3) le bouton pour soumettre la réponse
+            4) le résultat (si le jeu est gagné ou perdu).
+            Le tout est caché au début, puis seulement révélé si le bouton "Affiche la question" est appuyé -->
+        <div id="cache"><br>
+            
+            <!-- ÀREMPLACER est remplacé par la question voulue dans le switch dans la balise script en bas -->
+            <label id="question" for="txtQuestionSecondeVie">ÀREMPLACER</label>
+            <br><br>
+            <input type="text" id="txtQuestionSecondeVie">
+            <br><br>
+            <input type="button" id="cachebouton" onclick="verifieReponse()" value="Soumettre la réponse">
+            <div id="afficheResultat"></div>
+            
+        </div>
+        
+        </td>
+    <td>
+
+  <div class="piano">
+
+
+    <div class="Touche-blanche" data-note="Do" data-key="a">Do</div>
+    <div class="Touche-blanche" data-note="Ré" data-key="s">Ré</div>
+    <div class="Touche-blanche" data-note="Mi" data-key="d">Mi</div>
+    <div class="Touche-blanche" data-note="Fa" data-key="f">Fa</div>
+    <div class="Touche-blanche" data-note="Sol" data-key="g">Sol</div>
+    <div class="Touche-blanche" data-note="La" data-key="h">La</div>
+    <div class="Touche-blanche" data-note="Si" data-key="j">Si</div>
+    <div class="Touche-blanche" data-note="Do2" data-key="k">Do</div>
+    <div class="Touche-blanche" data-note="Ré2" data-key="2">Ré</div>
+    
+
+
+  <!-- Touche Noir -->    
+
+    <div class="Touche-noir c-sharp" data-note="Do#" data-key="w">Do#</div>
+    <div class="Touche-noir d-sharp" data-note="Ré#" data-key="e">Ré#</div>
+    <div class="Touche-noir f-sharp" data-note="Fa#" data-key="t">Fa#</div>
+    <div class="Touche-noir g-sharp" data-note="Sol#" data-key="y">Sol#</div>
+    <div class="Touche-noir a-sharp" data-note="La#" data-key="u">La#</div>
+    <div class="Touche-noir C-sharp" data-note="Do#2" data-key="w">Do#</div>
+
+  </div>
+    <!-- bouton pour soumettre le formulaire -->
+    <input type="button" id="btnSoumet" onclick="confirmeInscription()"  value="Soumettre la Note">
+    <!-- Création d'une section pour l'affichage des résultats -->
+    <div id="divAffiche">
+    </div>
+
+<!--Débute la partie Javascript-->
+      <script>
+     //Modèle de compatibilité JavaScript utilisé pour initialiser l'API Web Audio sur différents navigateurs
+    let AudioContext = window.AudioContext || window.webkitAudioContext;
+    //permet de Jouer avec L'API Web Audio
+    let audioCtx = new AudioContext();
+
+//Détermine les fréquence pour produire la bonne note lorsqu'on appuis sur la clé
+  let frequencies = {
+    "Do": 261.63,
+    "Do#": 277.18,
+    "Ré": 293.66,
+    "Ré#": 311.13,
+    "Mi": 329.63,
+    "Fa": 349.23,
+    "Fa#": 369.99,
+    "Sol": 392.00,
+    "Sol#": 415.30,
+    "La": 440.00,
+    "La#": 466.16,
+    "Si": 493.88,
+    "Do2": 523.26,
+    "Do#2": 554.37,
+    "Ré2": 587.83,
+  };
+
+// création d'une fonction qui permet a jouer la bonne fréquence pour produire un beau son universelle
+  function JoueNote(note, value){
+      //Détermine la fréquence avec une Oscillateure
+    let frequence = audioCtx.createOscillator();
+    //Trouve la note a jouer
+    let gainNode = audioCtx.createGain();
+//Joue le typue de son parmis les celle offert par Javascript
+    frequence.type = "sine";
+    //Trouve la valeure de la fréquence a jouer
+    frequence.frequency.value = frequencies[note];
+//cherche la note
+    frequence.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+//permet un son plus ron et court
+    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    //Détertmine la longuer de la note jouer
+    gainNode.gain.exponentialRampToValueAtTime(
+      0.001,
+      audioCtx.currentTime + 1
+    );
+
+//Assure que quand nous appuiyon sur la note nous avons une note jouer
+    frequence.start();
+    frequence.stop(audioCtx.currentTime + 1);
+
+//Chereche la valeure de la note appuiyer
+    value.classList.add("active");
+
+//Fait ensorte que la note ne reste pas appuiyer pour toujour et permet a être appuyer
+    setTimeout(() => {
+      value.classList.remove("active");
+    }, 100);
+  }
+
+//Cherche la quelle des touche a été choisit
+let keys = document.querySelectorAll(".Touche-blanche, .Touche-noir");
+//détermine nos variable
+let derniereNote = "";
+let counter = 0;
+let tblNotes = [];
+let erreur = 0;
+let choix = 0
+
+// CLICK SYSTEM
+keys.forEach(key => {
+  key.addEventListener("click", () => {
+
+    JoueNote(key.dataset.note, key);
+
+    derniereNote = key.dataset.note;
+
+  });
+});
+  
+  //rend la pieces au hazard
+  while((choix < 1)||(choix > 2)){
+        choix = (Math.random()*10).toFixed(0)
+  }
+
+//détermine la titre et quelle séquence
+let titre = ""
+let séquence = 0
+
+// Crée un changement au code au hazard
+if(choix == 1){
+    //détermine le titre
+    titre = "Petit prélude en ré mineur";
+    //détermine la séquence de Note
+    tblNotes = ["Ré2","La#","Fa","Ré2","La#","Fa#","Do2","La","Fa#","Do2","La"];
+    //détermine la séquence d'image
+    séquence = 1
+    //ajoute une image de base
+    document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_1.png' height='250'>";
+    //ajoute un instruction de base
+    document.getElementById("divInstruction").innerHTML = "Instruction : " 
+    
+}else{
+// crée un changmenet au code au hazard
+    if(choix == 2){
+    //détermine le titre
+    titre = "Le forgeron harmonieux";
+    //détermine la séquence de Note
+    tblNotes = ["Sol#","Fa#","Si","Sol#","Fa#","Mi","Fa#","Si","Sol#","Do#2","Mi","Ré#","Si","Ré#","Do#","La#","Si"];
+    //détermine la séquence d'image
+    séquence = 2
+    //Ajoute une image de base
+    document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_1.png' height='250'>";
+    //Ajoute un instruction de base                        
+    document.getElementById("divInstruction").innerHTML = "Instruction : " 
+}
+
+}
+
+//Ajoute le titre
+document.getElementById("divtitre").innerHTML = titre;
+//Ajoute une base de 0 erreur
+document.getElementById("messageErreur").innerHTML = "Nombre d'erreurs : " + 0;
+
+//Fonction qui fait fonctioner le code quand tu appuis sur le bouton soumetre
+    function confirmeInscription() {
+            
+            if(séquence == 1){
+                //Assure quelle recomense après 8 essey
+                if(counter == 8){
+                        //Ajoute un instruction de base                        
+    document.getElementById("divInstruction").innerHTML = "Instruction : " + tblNotes[0]
+                    counter = -1
+                    erreur = 0
+                }
+                //Assure que nous avons la bonne séquence d'image et d'instruction
+                switch (counter + 1){
+                    case 1 :
+                        //détermine l'image
+                         document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_2.png' height='250'>";
+                        //détermine L'instruction
+                        document.getElementById("divInstruction").innerHTML = "Instruction : " 
+                        break;
+                    case 2 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_3.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                           
+                            break;
+                    case 3 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_4.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                             
+                            break;
+                    case 4 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_5.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 5 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_6.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                             
+                            break;
+                    case 6 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_7.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                             
+                            break;
+                    case 7 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_8.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                             
+                            break;
+                    case 8 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_9.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                             
+                            break;
+                    case 9 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/pperm/pperm_complet.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Fini"   
+                            apparaitErreur();
+                            break;
+                        
+                }
+            }else{
+                //Assure quelle recomense après 8 essey
+                    if(séquence == 2){
+                        if(counter == 20){
+                                //Ajoute un instruction de base                        
+    document.getElementById("divInstruction").innerHTML = "Instruction : " + tblNotes[0]
+                        counter = -1
+                        erreur = 0
+                    }
+                     //assure que nous avons la bonne séquence d'image et d'instruction
+                    switch (counter + 1){
+                    case 1 :
+                        //détermine l'image
+                         document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_2.png' height='250'>";
+                        //détermine l'instruction
+                        document.getElementById("divInstruction").innerHTML = "Instruction : " 
+                        break;
+                    case 2 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_3.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 3 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_4.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 4 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_5.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 5 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_6.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+
+                    case 6 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_7.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                           
+                            break;
+                    case 7 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_8.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : " +                           
+                            break;
+                                                
+                    case 8 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_9.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : " 
+                                                
+                    case 9 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_10.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                                                
+                    case 10 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_11.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                           
+                            break;                    
+                    case 11 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_12.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 12 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_13.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 13 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_14.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 14 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_15.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 15 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_16.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 16 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_17.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Instruction : "                            
+                            break;
+                    case 17 :
+                        document.getElementById("divflat").innerHTML = "<img src='images/lfh/lfh_complet.png' height='250'>";
+                            
+                        document.getElementById("divInstruction").innerHTML = "Fini"        
+                            apparaitErreur();
+                            break;
+                        
+                }
+            }
+            }
+        // Code pour le message d'erreure
+            if(tblNotes[counter] != derniereNote){
+              erreur++;
+            }
+        //assure d'augmenter le compteur a chaque click
+          counter++
+        //Affiche le nombre d'erreure
+          document.getElementById("messageErreur").innerHTML = "Nombre d'erreurs : " + erreur;
+}
+  
+  
+</script>
+<!-- Fin du javascript -->
+    
+    </td>
+    
+  </tr>
+</table>
+    
+</body>
+
+</html>
