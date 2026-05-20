@@ -14,3 +14,9 @@
   cursor: pointer;
   background-color: coral;
 }
+
+#divInstruction {
+    text-weight: bold;
+    background-color: coral;
+    margin: 0 auto;
+}
