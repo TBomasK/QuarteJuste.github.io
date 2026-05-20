@@ -21,4 +21,8 @@
     margin: 0 auto;
     padding: 15px;
     height: 100px;
+    text-align: left;
+    text-align: right;
+    text-align: center;
+    font-size: 35px;
 }
