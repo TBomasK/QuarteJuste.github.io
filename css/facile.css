@@ -22,7 +22,9 @@
 #divtitre {
     width: 200px;
 }
+
 #divInstruction, #divtitre {
+    border-radius: 50px;
     font-weight: bold;
     background-color: coral;
     margin: 0 auto;
