@@ -19,4 +19,6 @@
     text-weight: bold;
     background-color: coral;
     margin: 0 auto;
+    padding: 15px;
+    height: 100px;
 }
