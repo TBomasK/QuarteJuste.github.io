@@ -16,8 +16,8 @@
 }
 
 #divInstruction, #divtitre {
-    width: 1000px
-    text-weight: bold;
+    width: 1000px;
+    font-weight: bold;
     background-color: coral;
     margin: 0 auto;
     padding: 15px;
