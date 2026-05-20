@@ -15,9 +15,14 @@
   background-color: coral;
 }
 
+#divInstruction {
+    width: 300px;
+}
+
+#divtitre {
+    width: 200px;
+}
 #divInstruction, #divtitre {
-    float: right;
-    width: 100px;
     font-weight: bold;
     background-color: coral;
     margin: 0 auto;
