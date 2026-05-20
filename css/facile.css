@@ -17,7 +17,7 @@
 
 #divInstruction, #divtitre {
     float: right;
-    width: 500px;
+    width: 100px;
     font-weight: bold;
     background-color: coral;
     margin: 0 auto;
