@@ -1,8 +1,9 @@
 /* source : https://www.w3schools.com/css/css_display_hide.asp */
-#cache {
+
+#cacheBouton {
     display: none;
 }
 
-#cacheBouton {
+#cache {
     display: none;
 }
